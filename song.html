@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Last Night on Earth - Green Day</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif; /* Default font */
+            background-color: #e6e6fa; /* Light lavender background */
+            color: #4b2c6f; /* Dark lavender text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Send it behind the lyrics */
+            animation: changeBackground 36s infinite; /* Total duration matches lyrics length */
+        }
+
+        @keyframes changeBackground {
+            0% { background-image: url('cinema.jpg'); }
+            10% { background-image: url('tall.jpg'); }
+            20% { background-image: url('eepy.jpg'); }
+            30% { background-image: url('hot.jpg'); }
+            40% { background-image: url('onigiri.jpg'); }
+            50% { background-image: url('mouth.jpg'); }
+            60% { background-image: url('white.jpg'); }
+            70% { background-image: url('hot.jpg'); }
+            80% { background-image: url('mirror.jpg'); }
+            90% { background-image: url('hair.jpg'); }
+            100% { background-image: url('grocery.jpg'); }
+        }
+
+        .lyrics {
+            font-size: 2.5em;
+            opacity: 0;
+            transform: translateY(20px);
+            display: none; /* Start hidden */
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        audio {
+            display: none; /* Hide the audio element */
+        }
+        
+    </style>
+</head>
+<body>
+
+<audio autoplay loop preload="auto">
+
+    <source src="lnoe.mp3" type="audio/mpeg"> <!-- Replace with your audio file -->
+    Your browser does not support the audio element.
+</audio>
+
+<div class="background"></div>
+
+<div id="lyrics" class="lyrics">
+    <div data-time="0:16">I text a postcard sent to you</div>
+    <div data-time="0:20">Did it go through?</div>
+    <div data-time="0:24">Sendin' all my love to you</div>
+    <div data-time="0:32">You are the moonlight of my life</div>
+    <div data-time="0:36">Every night</div>
+    <div data-time="0:40">Givin' all my love to you</div>
+    <div data-time="0:48">My beatin' heart belongs to you</div>
+    <div data-time="0:56">I walked for miles 'til I found you</div>
+    <div data-time="1:04">I'm here to honour you</div>
+    <div data-time="1:07">If I lose everything in the fire</div>
+    <div data-time="1:13">I'm sendin' all my love to you</div>
+    <div data-time="1:32">With every breath that I am worth</div>
+    <div data-time="1:36">Here on Earth</div>
+    <div data-time="1:40">I'm sendin' all my love to you</div>
+    <div data-time="1:48">So if you dare to second-guess</div>
+    <div data-time="1:52">You can rest</div>
+    <div data-time="1:56">Assured that all my love's for you</div>
+    <div data-time="2:04">My beatin' heart belongs to you</div>
+    <div data-time="2:12">I walked for miles 'til I found you</div>
+    <div data-time="2:20">I'm here to honour you</div>
+    <div data-time="2:23">If I lose everything in the fire</div>
+    <div data-time="2:29">I'm sendin' all my love to you</div>
+    <div data-time="3:04">My beatin' heart belongs to you</div>
+    <div data-time="3:12">I walked for miles 'til I found you</div>
+    <div data-time="3:20">I'm here to honour you</div>
+    <div data-time="3:23">If I lose everything in the fire</div>
+    <div data-time="3:29">Did I ever make it through?</div>
+</div>
+
+<script>
+    const lyrics = document.querySelectorAll('#lyrics div');
+    let index = 0;
+
+    function timeToMilliseconds(time) {
+        const [minutes, seconds] = time.split(':').map(Number);
+        return (minutes * 60 + seconds) * 1000; // Convert to milliseconds
+    }
+
+    function showNextLine() {
+        if (index < lyrics.length) {
+            const currentLine = lyrics[index];
+            currentLine.style.display = 'block'; // Show the line
+            currentLine.style.opacity = 0; // Reset opacity for fade in
+            currentLine.style.animation = 'fadeIn 1s forwards'; // Trigger fade-in animation
+
+            setTimeout(() => {
+                currentLine.style.opacity = 1; // Set opacity to 1 after animation
+            }, 100); // Short delay to allow animation to play
+
+            index++;
+            const nextLineTime = index < lyrics.length ? timeToMilliseconds(lyrics[index].getAttribute('data-time')) : 2000;
+            setTimeout(showNextLine, nextLineTime); // Show next line after the specified time
+        }
+    }
+
+    showNextLine(); // Start the lyrics animation
+</script>
+
+</body>
+</html>
